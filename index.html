@@ -35,6 +35,20 @@
   #f07900
   #d35100
 */
+    @font-face {
+        font-family: 'Roboto-Regular';
+        src: url('Roboto-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'OpenSans';
+        src: url('OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
     :root {
       --background-color: #000000;
       --secondary-color: #151515;
@@ -44,7 +58,10 @@
     }
   
     * {color: var(--foreground-color)}
-    body {background-color: var(--background-color); }
+    body {
+      font-family: 'OpenSans', sans-serif;
+      background-color: var(--background-color); 
+    }
     h1 {font-size: 3rem;}
     .debug {
       background-color: red;
@@ -142,7 +159,7 @@
 
     <div class="" style="position: sticky; top: 0; backdrop-filter: blur(5px); background-color: none;">
       <div class="container" style="margin: 0% 5%; height: 4rem; display: flex; position: sticky; top: 0;">
-        <h1 style="white-space: nowrap">Main Heading</h1>
+        <h1 style="white-space: nowrap">Vicken Mavlian</h1>
         <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
           <div class="menu-burger" style="position: relative;">
             <div style="margin: 0% 0%; display: flex; flex-direction: column; gap: 10px;">
