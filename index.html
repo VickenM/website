@@ -1,6 +1,24 @@
 <html>
   <head>
     <title>Vicken Mavlian Blog</title>
+
+    <script>
+      function togglePopup(target, el) {
+        el.classList.add('clicked')
+      }
+
+      window.onclick = function(event) {
+        Array.from(document.getElementsByClassName('talkbubble')).forEach((element) => {
+          if (element.classList.contains('clicked')) {
+            element.classList.remove('clicked')
+            element.style.display = element.style.display == 'block' ? 'none': 'block';
+          } else {
+            element.style.display = 'none';
+          }
+        })
+      }
+
+    </script>
     <style>
 /*
   #ED254E
@@ -9,14 +27,30 @@
   #011936
   #465362
 */
-    * {color: #F9DC5C}
-    body {background-color: #011936; }
+
+/*
+  #000000
+  #151515
+  #f8a145
+  #f07900
+  #d35100
+*/
+    :root {
+      --background-color: #000000;
+      --secondary-color: #151515;
+      --foreground-color: #f8a145;
+      --decoration-color: #f8a145;
+      --highlight-color: #d35100;
+    }
+  
+    * {color: var(--foreground-color)}
+    body {background-color: var(--background-color); }
     h1 {font-size: 3rem;}
     .debug {
       background-color: red;
     }
     .bordered {
-      border: 1px solid #465362; 
+      border: 1px solid var(--decoration-color); 
       border-radius: 10px;
       padding: 0.5rem;
     }
@@ -39,10 +73,24 @@
       height: 25px;
     }
     .icon-stroked path {
-      stroke: #F9DC5C;
+      stroke: var(--foreground-color);
+    }
+    button, a {
+      padding: 0;
+      background: none; border: none;
+    }
+    button:hover, a:hover {
+      background-color: var(--highlight-color);
+      border-radius: 5px;
+      filter: blur(2px);
+    }
+    li:hover {
+      background-color: var(--highlight-color);
+      border-radius: 5px;
+      filter: blur(1px);
     }
     .icon-filled path {
-      fill: #F9DC5C;
+      fill: var(--foreground-color);
     }
     menu {
       background-color: none;
@@ -58,7 +106,7 @@
     }
     @media (max-width: 900px) {
       .unbordered-900 {
-        border: 0px solid #465362; 
+        border: 0px solid var(--decoration-color); 
       }
       .menu-burger {
         display: inline;
@@ -67,34 +115,74 @@
         display: none;
       }
     }
+    .talkbubble::before {
+      content: "";
+      position: absolute;
+      left: 9rem;
+      top: -10px;
+      width: 0;
+      height: 0;
+      z-index: -1;
+      border-right: 5px solid transparent;
+      border-left: 5px solid transparent;
+      border-bottom: 10px solid var(--decoration-color);
+    }
+    .talkbubble {
+      position: fixed;
+      right: -1rem;
+      -moz-border-radius: 10px;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--decoration-color); 
+      background-color: rgba(0,0,0, 0.9);
+    }
     </style>
   </head>
   <body>
-    <div class="container" style="margin: 0% 5%; width: inherit; height: 4rem; display: flex; position: sticky; top: 0; backdrop-filter: blur(5px);">
-      <h1 style="white-space: nowrap">Main Heading</h1>
-      <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
-        <div class="menu-burger">
-          <svg class="icon icon-stroked" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4 18h16M4 12h16M4 6h16" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+
+    <div class="" style="position: sticky; top: 0; backdrop-filter: blur(5px); background-color: none;">
+      <div class="container" style="margin: 0% 5%; height: 4rem; display: flex; position: sticky; top: 0;">
+        <h1 style="white-space: nowrap">Main Heading</h1>
+        <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
+          <div class="menu-burger" style="position: relative;">
+            <div style="margin: 0% 0%; display: flex; flex-direction: column; gap: 10px;">
+              <button class="menu-burger-popup" id="menu-burger-popup" onclick="togglePopup(event.currentTarget, getElementById('main-menu-popup'))" style="">
+                <svg style="cursor: pointer;" class="icon icon-stroked" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 18h16M4 12h16M4 6h16" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+            <div id="main-menu-popup" class="talkbubble" style="position: absolute; top: 2rem; display: block; margin: 0px 0px; padding: 0.5rem 0.5rem; width: 10rem;">
+              <menu class="" style="display: flex; flex-direction: column; gap: 0.5rem; margin: 0rem; padding: 0.5rem;">
+                <li><a href="">Home</a></li>
+                <li><a href="">Tools</a></li>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Bio</a></li>
+              </menu>
+            </div>
+          </div>
+          <div class="menu-items">
+            <menu class="stretched" style="align-items: center;">
+              <li><a href="">Home</a></li>
+              <li><a href="">Tools</a></li>
+              <li><a href="">Blog</a></li>
+              <li><a href="">Bio</a></li>
+            </menu>
+          </div>
         </div>
-        <div class="menu-items">
-          <menu class="stretched" style="align-items: center;">
-            <li><a href="">Home</a></li>
-            <li><a href="">Tools</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Bio</a></li>
-          </menu>
+        <div style="display: flex; width: 5rem; justify-content: space-around;">
+          <a class="menu-burger-popup" id="menu-burger-popup" href="https://github.com/VickenM/" target="_blank">
+            <svg style="cursor: pointer" class="icon icon-filled"  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 0c5.523 0 10 4.59 10 10.253 0 4.529-2.862 8.371-6.833 9.728-.507.101-.687-.219-.687-.492 0-.338.012-1.442.012-2.814 0-.956-.32-1.58-.679-1.898 2.227-.254 4.567-1.121 4.567-5.059 0-1.12-.388-2.034-1.03-2.752.104-.259.447-1.302-.098-2.714 0 0-.838-.275-2.747 1.051A9.396 9.396 0 0 0 10 4.958a9.375 9.375 0 0 0-2.503.345C5.586 3.977 4.746 4.252 4.746 4.252c-.543 1.412-.2 2.455-.097 2.714-.639.718-1.03 1.632-1.03 2.752 0 3.928 2.335 4.808 4.556 5.067-.286.256-.545.708-.635 1.371-.57.262-2.018.715-2.91-.852 0 0-.529-.985-1.533-1.057 0 0-.975-.013-.068.623 0 0 .655.315 1.11 1.5 0 0 .587 1.83 3.369 1.21.005.857.014 1.665.014 1.909 0 .271-.184.588-.683.493C2.865 18.627 0 14.783 0 10.253 0 4.59 4.478 0 10 0" fill-rule="evenodd"/>
+            </svg>
+          </a>
+          <a class="menu-burger-popup" id="menu-burger-popup" href="https://www.linkedin.com/in/vicken-mavlian-18334642/" target="_blank">
+            <svg style="cursor: pointer" class="icon icon-filled" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8Zm6 9h1a1 1 0 0 0 1-1v-4.5c0-1.5 3-2.5 3-.5v5a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-6c0-2-1.5-3-3.5-3S13 10.5 13 10.5V10a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Z" fill="#0F0F0F"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M20 1a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3h16Zm0 2a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h16Z" fill="#0F0F0F"/>
+            </svg>
+          </a>
         </div>
-      </div>
-      <div style="display: flex; width: 5rem; justify-content: space-around">
-        <svg class="icon icon-filled"  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M10 0c5.523 0 10 4.59 10 10.253 0 4.529-2.862 8.371-6.833 9.728-.507.101-.687-.219-.687-.492 0-.338.012-1.442.012-2.814 0-.956-.32-1.58-.679-1.898 2.227-.254 4.567-1.121 4.567-5.059 0-1.12-.388-2.034-1.03-2.752.104-.259.447-1.302-.098-2.714 0 0-.838-.275-2.747 1.051A9.396 9.396 0 0 0 10 4.958a9.375 9.375 0 0 0-2.503.345C5.586 3.977 4.746 4.252 4.746 4.252c-.543 1.412-.2 2.455-.097 2.714-.639.718-1.03 1.632-1.03 2.752 0 3.928 2.335 4.808 4.556 5.067-.286.256-.545.708-.635 1.371-.57.262-2.018.715-2.91-.852 0 0-.529-.985-1.533-1.057 0 0-.975-.013-.068.623 0 0 .655.315 1.11 1.5 0 0 .587 1.83 3.369 1.21.005.857.014 1.665.014 1.909 0 .271-.184.588-.683.493C2.865 18.627 0 14.783 0 10.253 0 4.59 4.478 0 10 0" fill-rule="evenodd"/>
-        </svg>
-        <svg class="icon icon-filled" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6.5 8a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8Zm6 9h1a1 1 0 0 0 1-1v-4.5c0-1.5 3-2.5 3-.5v5a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-6c0-2-1.5-3-3.5-3S13 10.5 13 10.5V10a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1Z" fill="#0F0F0F"/>
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M20 1a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V4a3 3 0 0 1 3-3h16Zm0 2a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h16Z" fill="#0F0F0F"/>
-        </svg>
       </div>
     </div>
 
@@ -140,6 +228,5 @@
         </article>
       </article>
     </div>
-
   </body>
 </html>
