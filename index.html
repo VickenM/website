@@ -26,9 +26,7 @@
   #F4FFFD
   #011936
   #465362
-*/
 
-/*
   #000000
   #151515
   #f8a145
@@ -59,10 +57,22 @@
   
     * {color: var(--foreground-color)}
     body {
+      font-size: 100%;
       font-family: 'OpenSans', sans-serif;
       background-color: var(--background-color); 
     }
-    h1 {font-size: 3rem;}
+    h1 {
+      font-size: 3rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    h4 {
+      font-size: 1.25rem;
+    }
+    p, a {
+      font-size: 1rem;
+    }
     .debug {
       background-color: red;
     }
@@ -92,6 +102,9 @@
     .icon-stroked path {
       stroke: var(--foreground-color);
     }
+    .icon-filled path {
+      fill: var(--foreground-color);
+    }
     button, a {
       padding: 0;
       background: none; border: none;
@@ -106,9 +119,6 @@
       border-radius: 5px;
       filter: blur(1px);
     }
-    .icon-filled path {
-      fill: var(--foreground-color);
-    }
     menu {
       background-color: none;
       display: flex;
@@ -121,7 +131,7 @@
     .menu-burger {
       display: none;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 800px) {
       .unbordered-900 {
         border: 0px solid var(--decoration-color); 
       }
@@ -131,6 +141,7 @@
       .menu-items {
         display: none;
       }
+
     }
     .talkbubble::before {
       content: "";
@@ -214,7 +225,7 @@
             <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 4</h2>
             <h4 class="" style="margin: 0rem;">2024.11.06</h4>
           </div>
-          <p style="">
+          <p style="font-size: ">
             here are some good svg images:
             <a target="_blank" href="https://www.svgrepo.com/">svgrep</a>
             and here is a good optimizer:
