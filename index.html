@@ -49,10 +49,11 @@
 
     :root {
       --background-color: #000000;
-      --secondary-color: #f7dec3;
-      --foreground-color: #f8a145;
+      --secondary-color: #151515;
+      --foreground-color: #f7dec3;
       --decoration-color: #f8a145;
       --highlight-color: #f07900;
+      font-size: 100%;
     }
     * {
       color: var(--foreground-color)
@@ -61,30 +62,34 @@
       overflow-x: hidden; /* Prevents horizontal scrolling */
     }
     body {
-      font-size: 100%;
       font-family: 'OpenSans', sans-serif;
 /*      background-color: var(--background-color);  */
-      background-image: linear-gradient(#000000, #151515);
+      background-image: linear-gradient(var(--background-color), var(--secondary-color));
     }
     html, body {
       box-sizing: border-box; /* Ensures padding and borders are included in the width */
     }
     h1 {
       font-size: 2.5rem;
+      color: var(--decoration-color);
     }
     h2 {
       font-size: 1.25rem;
-      color: var(--secondary-color);
+      color: var(--foreground-color);
     }
-    h4 {
-      font-size: 1.0rem;
+    h4, a {
+      font-size: 0.75rem;
+      color: var(--decoration-color);
     }
-    p, a {
+    a {
+      text-decoration: none;
+    }
+    p {
       font-size: 1rem;
-      color: var(--secondary-color);
+      color: var(--foreground-color);
     }
     h5 {
-      color: var(--secondary-color);
+      color: var(--foreground-color);
     }
     .debug {
       background-color: red;
@@ -212,6 +217,11 @@
       </div>
 
       <article class="container">
+        <!--
+        <article class="bordered item" style="display: flex;">
+          <p style="flex-grow: 1; flex-shrink: 0; font-size: 1rem;">Here is a less interesting post</p>
+        </article>
+        -->
         <article class="bordered item" style="display: flex; flex-direction: column;">
           <div style="display: flex; ">
             <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 4</h2>
@@ -222,8 +232,8 @@
             <a target="_blank" href="https://www.svgrepo.com/">svgrep</a>
             and here is a good optimizer:
             <a target="_blank" href="https://svgomg.net/">svgomg (optimizer)</a>
-          </p>
           <a style="text-decoration: none; font-weight: bold" target="" href="">Read More</a>
+          </p>
         </article>
         <article class="bordered item" style="display: flex; flex-direction: column;">
           <div style="display: flex; ">
@@ -249,7 +259,7 @@
       </article>
       <footer>
         <div style="display: flex; justify-content: space-between; align-items: center">
-          <h5>last updated: 2024.11.16 02:50 AM</h5>
+          <h5>last updated: 2024.11.16 03:35 PM</h5>
           <div style="display: flex; width: 5rem; justify-content: space-around;">
             <a class="menu-burger-popup" id="menu-burger-popup" href="https://github.com/VickenM/" target="_blank">
               <svg style="cursor: pointer" class="icon icon-filled"  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
