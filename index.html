@@ -4,7 +4,18 @@
     <title>Vicken Mavlian Blog</title>
     <script>
       function togglePopup(target, el) {
-        el.classList.add('clicked')
+        el.classList.add('clicked');
+      }
+
+      function switchPage(templateId) {
+        let content = document.getElementById(templateId);
+        let el = document.getElementById('content');
+        el.innerHTML = '';
+        el.appendChild(content.content.cloneNode(true));
+      }
+
+      window.onload = function() {
+        switchPage('homepage');
       }
 
       window.onclick = function(event) {
@@ -49,7 +60,7 @@
 
     :root {
       --background-color: #000000;
-      --secondary-color: #151515;
+      --secondary-color: #333;
       --foreground-color: #f7dec3;
       --decoration-color: #f8a145;
       --highlight-color: #f07900;
@@ -81,7 +92,7 @@
       font-size: 0.75rem;
       color: var(--decoration-color);
     }
-    a {
+    button, a {
       font-size: 1rem;
       text-decoration: none;
       color: var(--decoration-color);
@@ -92,6 +103,14 @@
     }
     h5 {
       color: var(--foreground-color);
+    }
+    button, a {
+      padding: 0;
+      background: none; border: none;
+    }
+    button:hover, a:hover, li:hover {
+      cursor: pointer;
+      color: var(--highlight-color);
     }
     .debug {
       background-color: red;
@@ -124,13 +143,6 @@
     }
     .icon-filled path {
       fill: var(--decoration-color);
-    }
-    button, a {
-      padding: 0;
-      background: none; border: none;
-    }
-    a:hover, li:hover {
-      color: var(--highlight-color);
     }
     menu {
       background-color: none;
@@ -180,12 +192,22 @@
       border: 1px solid var(--decoration-color); 
       background-color: rgba(0,0,0, 0.9);
     }
+
+    .innerContent {
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
     </style>
   </head>
   <body>
     <div class="" style="position: sticky; top: 0; backdrop-filter: blur(5px); background-color: none; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0);">       
       <div class="container" style="margin: 0% 5%; height: 2rem; display: flex; position: sticky; top: 0;">
-        <h1 style="white-space: nowrap">Vicken Mavlian</h1>
+        <a onclick="switchPage('homepage')">
+          <h1 style="white-space: nowrap;">Vicken Mavlian</h1>
+        </a>
         <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
           <div class="menu-burger" style="position: relative;">
             <div style="margin: 0% 0%; display: flex; flex-direction: column; gap: 10px;">
@@ -197,7 +219,7 @@
             </div>
             <div id="main-menu-popup" class="talkbubble" style="position: absolute; top: 2rem; display: none; margin: 0px 0px; padding: 0.5rem 0.5rem; width: 10rem;">
               <menu class="" style="display: flex; flex-direction: column; gap: 0.5rem; margin: 0rem; padding: 0.5rem;">
-                <li><a href="">Tools</a></li>
+                <li><a onclick="switchPage('tools')">Tools</a></li>
                 <li><a href="">Blog</a></li>
                 <li><a href="">Bio</a></li>
               </menu>
@@ -205,7 +227,7 @@
           </div>
           <div class="menu-items">
             <menu class="stretched" style="align-items: center;">
-              <li><a href="">Tools</a></li>
+              <li><a onclick="switchPage('tools')">Tools</a></li>
               <li><a href="">Blog</a></li>
               <li><a href="">Bio</a></li>
             </menu>
@@ -214,52 +236,9 @@
       </div>
     </div>
 
-    <div style="margin: 0 10vw">
-      <div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      </div>
+    <div style="margin: 0 10%">
+      <div id="content"></div>
 
-      <article class="container">
-        <!--
-        <article class="bordered item" style="display: flex;">
-          <p style="flex-grow: 1; flex-shrink: 0; font-size: 1rem;">Here is a less interesting post</p>
-        </article>
-        -->
-        <article class="bordered item" style="display: flex; flex-direction: column;">
-          <div style="display: flex; ">
-            <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 4</h2>
-            <h4 class="" style="margin: 0rem;">2024.11.06</h4>
-          </div>
-          <p>
-            here are some good svg images:
-            <a target="_blank" href="https://www.svgrepo.com/">svgrep</a>
-            and here is a good optimizer:
-            <a target="_blank" href="https://svgomg.net/">svgomg (optimizer)</a>
-          <a style="text-decoration: none; font-weight: bold" target="" href="">Read More</a>
-          </p>
-        </article>
-        <article class="bordered item" style="display: flex; flex-direction: column;">
-          <div style="display: flex; ">
-            <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 3</h2>
-            <h4 class="" style="margin: 0rem;">2024.11.05</h4>
-          </div>
-          <p>Here is a less interesting post</p>
-        </article>
-        <article class="bordered item" style="display: flex; flex-direction: column;">
-          <div style="display: flex; ">
-            <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 2</h2>
-            <h4 class="" style="margin: 0rem;">2024.11.03</h4>
-          </div>
-          <p>Here is another interesting post</p>
-        </article>
-        <article class="bordered item" style="display: flex; flex-direction: column;">
-          <div style="display: flex; ">
-            <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 1</h2>
-            <h4 class="" style="margin: 0rem;">2024.11.01</h4>
-          </div>
-          <p>Here is an interesting post</p>
-        </article>
-      </article>
       <footer>
         <div style="display: flex; justify-content: space-between; align-items: center">
           <h5>last updated: 2024.11.16 03:55 PM</h5>
@@ -279,5 +258,55 @@
         </div>
       </footer>
     </div>
+
+    <template id="homepage">
+      <div class="innerContent">
+        <div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+
+        <article class="container">
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 4</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.06</h4>
+            </div>
+            <p>
+              here are some good svg images:
+              <a target="_blank" href="https://www.svgrepo.com/">svgrep</a>
+              and here is a good optimizer:
+              <a target="_blank" href="https://svgomg.net/">svgomg (optimizer)</a>
+            <a style="text-decoration: none; font-weight: bold" target="" href="">Read More</a>
+            </p>
+          </article>
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 3</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.05</h4>
+            </div>
+            <p>Here is a less interesting post</p>
+          </article>
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 2</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.03</h4>
+            </div>
+            <p>Here is another interesting post</p>
+          </article>
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 1</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.01</h4>
+            </div>
+            <p>Here is an interesting post</p>
+          </article>
+        </article>
+      </div>
+    </template>
+    <template id="tools">
+      <div class="innerContent">
+        <p>Here are some tools!</p>
+      </div>
+    </template>
   </body>
 </html>
