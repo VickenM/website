@@ -8,14 +8,31 @@
       }
 
       function switchPage(templateId) {
-        let content = document.getElementById(templateId);
+        console.log(templateId)
+        let domContent = document.getElementById(templateId);
         let el = document.getElementById('content');
         el.innerHTML = '';
-        el.appendChild(content.content.cloneNode(true));
+        el.appendChild(domContent.content.cloneNode(true));
       }
 
       window.onload = function() {
-        switchPage('homepage');
+        console.log('loading...')
+        let url = URL.parse(window.location.href);
+        if (url.hash !== '') {
+          switchPage(url.hash.split('#')[1]);
+        } else {
+          switchPage('homepage');
+        }
+      }
+
+      window.onhashchange = function() {
+        console.log(`hash changed ${window.location.href}`);
+        let url = URL.parse(window.location.href);
+        if (url.hash !== '') {
+          switchPage(url.hash.split('#')[1]);
+        } else {
+          switchPage('homepage');
+        }
       }
 
       window.onclick = function(event) {
@@ -181,7 +198,6 @@
       border-right: 5px solid transparent;
       border-left: 5px solid transparent;
       border-bottom: 10px solid var(--decoration-color);
-      outline: 1px solid red;
     }
     .talkbubble {
       position: fixed;
@@ -205,7 +221,7 @@
   <body>
     <div class="" style="position: sticky; top: 0; backdrop-filter: blur(5px); background-color: none; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0);">       
       <div class="container" style="margin: 0% 5%; height: 2rem; display: flex; position: sticky; top: 0;">
-        <a onclick="switchPage('homepage')">
+        <a href="#">
           <h1 style="white-space: nowrap;">Vicken Mavlian</h1>
         </a>
         <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
@@ -219,17 +235,17 @@
             </div>
             <div id="main-menu-popup" class="talkbubble" style="position: absolute; top: 2rem; display: none; margin: 0px 0px; padding: 0.5rem 0.5rem; width: 10rem;">
               <menu class="" style="display: flex; flex-direction: column; gap: 0.5rem; margin: 0rem; padding: 0.5rem;">
-                <li><a onclick="switchPage('tools')">Tools</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">Bio</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#bio">Bio</a></li>
               </menu>
             </div>
           </div>
           <div class="menu-items">
             <menu class="stretched" style="align-items: center;">
-              <li><a onclick="switchPage('tools')">Tools</a></li>
-              <li><a href="">Blog</a></li>
-              <li><a href="">Bio</a></li>
+              <li><a href="#tools">Tools</a></li>
+              <li><a href="#blog">Blog</a></li>
+              <li><a href="#bio">Bio</a></li>
             </menu>
           </div>
         </div>
@@ -241,7 +257,7 @@
 
       <footer>
         <div style="display: flex; justify-content: space-between; align-items: center">
-          <h5>last updated: 2024.11.16 03:55 PM</h5>
+          <h5>last updated: 2024.11.16 11:41 PM</h5>
           <div style="display: flex; width: 5rem; justify-content: space-around;">
             <a class="menu-burger-popup" id="menu-burger-popup" href="https://github.com/VickenM/" target="_blank">
               <svg style="cursor: pointer" class="icon icon-filled"  viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -308,5 +324,16 @@
         <p>Here are some tools!</p>
       </div>
     </template>
+    <template id="blog">
+      <div class="innerContent">
+        <p>Im going to write some interesting facts and amazing thoughts here</p>
+      </div>
+    </template>
+    <template id="bio">
+      <div class="innerContent">
+        <p>This is my bio, omg.</p>
+      </div>
+    </template>
+
   </body>
 </html>
