@@ -8,7 +8,7 @@
       }
 
       function switchPage(templateId) {
-        console.log(templateId)
+        console.log(`template id is: ${templateId}`)
         let domContent = document.getElementById(templateId);
         let el = document.getElementById('content');
         el.innerHTML = '';
@@ -18,7 +18,7 @@
       function updatePageContent() {
         let url = URL.parse(window.location.href);
         if (url.hash !== '') {
-          switchPage(url.hash.split('#')[1]);
+          switchPage(url.hash.split('/')[1]);
         } else {
           switchPage('homepage');
         }
@@ -43,6 +43,18 @@
             element.style.display = 'none';
           }
         })
+
+        if (event.target.pathname !== undefined) {
+          event.preventDefault();
+          console.log(`pathname: ${event.target.pathname}`);
+          window.history.pushState({}, "", event.target.pathname);
+          switchPage(event.target.pathname.split('/')[1]);
+        }
+      }
+
+      window.onpopstate = function (event) {
+        console.log('pop state!!');
+        switchPage(window.location.pathname.split('/')[1] || 'homepage');
       }
 
     </script>
@@ -220,7 +232,7 @@
   <body>
     <div class="" style="position: sticky; top: 0; backdrop-filter: blur(5px); background-color: none; display: flex; flex-direction: column; align-items: center;">
       <div class="container" style="margin: 0% 5%; width: 100%; max-width: 60rem; height: 2rem; display: flex; position: sticky; top: 0;">
-        <a href="#">
+        <a href="/">
           <h1 style="white-space: nowrap;">Vicken Mavlian</h1>
         </a>
         <div class="bordered unbordered-900" style="height: 1rem; display: flex; align-items: center; justify-content: end; flex-grow: 1;">
@@ -234,17 +246,18 @@
             </div>
             <div id="main-menu-popup" class="talkbubble" style="position: absolute; top: 2rem; display: none; margin: 0px 0px; padding: 0.5rem 0.5rem; width: 10rem;">
               <menu class="" style="display: flex; flex-direction: column; gap: 0.5rem; margin: 0rem; padding: 0.5rem;">
-                <li><a href="#tools">Tools</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#bio">Bio</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/bio">Bio</a></li>
               </menu>
             </div>
           </div>
           <div class="menu-items">
             <menu class="stretched" style="align-items: center;">
-              <li><a href="#tools">Tools</a></li>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#bio">Bio</a></li>
+              <li><a href="/tools">Tools</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/bio">Bio</a></li>
+              <li><a href="/test">Test</a></li>
             </menu>
           </div>
         </div>
