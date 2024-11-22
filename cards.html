@@ -3,10 +3,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vicken Mavlian Blog</title>
     <script>
+      
       window.onload = function() {
         console.log(window);
         console.log('loading...');
-        cardSelector.next();
+
+        customElements.define('slides-element', Slides)
       }
 
       window.onhashchange = function() {
@@ -16,52 +18,51 @@
       }
 
       class CardSelector {
-        constructor() {
+        constructor(params) {
+          this.container = params.container;
+          this.items = params.items;
+
           this.index = -1;
           this.direction = 0;
         }
 
         previous() {
-          let cards = document.getElementById('cards');
-          if (--this.index < 0) {this.index = cards.children.length-1;}
+          if (--this.index < 0) {this.index = this.items.length-1;}
 
           let newCard = document.createElement("div");
-          newCard.classList.add('card')
           newCard.classList.add('fadeInRight')
-          newCard.appendChild(cards.children[this.index].content.cloneNode(true));
+          newCard.appendChild(this.items[this.index].cloneNode(true));
           newCard.style.right = '100%'
 
-          let container = document.getElementById('cardsContainer');
-
-          if (container.children?.length == 1) {
-            let prevCard = container.children[0];
+          if (this.container.children?.length == 1) {
+            let prevCard = this.container.children[0];
             prevCard.style.right = '100%'
             prevCard.classList.remove('fadeInLeft');
             prevCard.classList.add('fadeOutRight')
-            container.insertBefore(newCard, container.children[0]);
+            this.container.insertBefore(newCard, this.container.children[0]);
           } 
-          else if (container.children?.length == 2) {
+          else if (this.container.children?.length == 2) {
             if (this.direction < 0) { // im going in the same direction
-              container.removeChild(container.children[1]);
-              container.children[0].style.right = '100%';
-              container.children[0].classList.remove('fadeInLeft');
-              container.children[0].classList.remove('fadeInRight');
-              void container.children[0].offsetWidth;
-              container.children[0].classList.add('fadeOutRight')
+              this.container.removeChild(this.container.children[1]);
+              this.container.children[0].style.right = '100%';
+              this.container.children[0].classList.remove('fadeInLeft');
+              this.container.children[0].classList.remove('fadeInRight');
+              void this.container.children[0].offsetWidth;
+              this.container.children[0].classList.add('fadeOutRight')
 
-              container.insertBefore(newCard, container.children[0]);
+              this.container.insertBefore(newCard, this.container.children[0]);
             } else { // the direction switched
-              container.children[0].style.right = '100%';
-              container.children[0].classList.remove('fadeOutLeft');
-              container.children[0].classList.remove('fadeOutRight');
-              void container.children[0].offsetWidth;
-              container.children[0].classList.add('fadeInRight')
+              this.container.children[0].style.right = '100%';
+              this.container.children[0].classList.remove('fadeOutLeft');
+              this.container.children[0].classList.remove('fadeOutRight');
+              void this.container.children[0].offsetWidth;
+              this.container.children[0].classList.add('fadeInRight')
 
-              container.children[1].style.right = '100%';
-              container.children[1].classList.remove('fadeInLeft');
-              container.children[1].classList.remove('fadeInRight');
-              void container.children[1].offsetWidth;
-              container.children[1].classList.add('fadeOutRight')
+              this.container.children[1].style.right = '100%';
+              this.container.children[1].classList.remove('fadeInLeft');
+              this.container.children[1].classList.remove('fadeInRight');
+              void this.container.children[1].offsetWidth;
+              this.container.children[1].classList.add('fadeOutRight')
             }
           }
           this.direction = -1;
@@ -69,147 +70,176 @@
 
         next() {
           let cards = document.getElementById('cards');
-          if (++this.index > cards.children.length-1) {this.index = 0;}
+          if (++this.index > this.items.length-1) {this.index = 0;}
 
+          /*
           let newCard = document.createElement("div");
-          newCard.classList.add('card')
           newCard.classList.add('fadeInLeft')
-          newCard.appendChild(cards.children[this.index].content.cloneNode(true));
+          newCard.appendChild(this.items[this.index].cloneNode(true));
           newCard.style.right = '0%'
+          */
 
-          let container = document.getElementById('cardsContainer');
+          let newCard = this.items[this.index].cloneNode(true)
+          newCard.classList.add('fadeInLeft')
+          newCard.style.right = '0%'
           
-          if (container.children.length == 0) {
-            container.appendChild(newCard);
+          if (this.container.children.length == 0) {
+            this.container.appendChild(newCard);
           }
-          else if (container.children?.length == 1) {
+          else if (this.container.children?.length == 1) {
             newCard.style.right = '100%'
-            let prevCard = container.children[0];
+            let prevCard = this.container.children[0];
             prevCard.style.right = '100%'
             prevCard.classList.remove('fadeInLeft');
             void prevCard.offsetWidth;
             prevCard.classList.add('fadeOutLeft')
-            container.appendChild(newCard);
+            this.container.appendChild(newCard);
+            console.log(this.container)
           } 
-          else if (container.children?.length == 2) {
+          else if (this.container.children?.length == 2) {
             if (this.direction > 0) { // im going in the same direction
-              container.removeChild(container.children[0]);
-              container.children[0].style.right = '100%';
-              container.children[0].classList.remove('fadeInLeft');
-              container.children[0].classList.remove('fadeInRight');
-              void container.children[0].offsetWidth;
-              container.children[0].classList.add('fadeOutLeft')
+              this.container.removeChild(this.container.children[0]);
+              this.container.children[0].style.right = '100%';
+              this.container.children[0].classList.remove('fadeInLeft');
+              this.container.children[0].classList.remove('fadeInRight');
+              void this.container.children[0].offsetWidth;
+              this.container.children[0].classList.add('fadeOutLeft')
 
               newCard.style.right = '100%'
-              container.appendChild(newCard);
+              this.container.appendChild(newCard);
             } else { // the direction switched
-              container.children[1].style.right = '100%';
-              container.children[1].classList.remove('fadeInLeft');
-              container.children[1].classList.remove('fadeInRight');
-              container.children[1].classList.remove('fadeOutRight');
-              void container.children[1].offsetWidth;
-              container.children[1].classList.add('fadeInLeft')
+              this.container.children[1].style.right = '100%';
+              this.container.children[1].classList.remove('fadeInLeft');
+              this.container.children[1].classList.remove('fadeInRight');
+              this.container.children[1].classList.remove('fadeOutRight');
+              void this.container.children[1].offsetWidth;
+              this.container.children[1].classList.add('fadeInLeft')
 
-              container.children[0].style.right = '100%';
-              container.children[0].classList.remove('fadeOutLeft');
-              container.children[0].classList.remove('fadeOutRight');
-              void container.children[0].offsetWidth;
-              container.children[0].classList.add('fadeOutLeft')
+              this.container.children[0].style.right = '100%';
+              this.container.children[0].classList.remove('fadeOutLeft');
+              this.container.children[0].classList.remove('fadeOutRight');
+              void this.container.children[0].offsetWidth;
+              this.container.children[0].classList.add('fadeOutLeft')
             }
           }
           this.direction = 1;
         }
       }
 
-      let cardSelector = new CardSelector();
+      let cardSelector = undefined;
+
+      class Slides extends HTMLElement {
+        constructor() {
+          super(); // Always call super first in constructor
+          this.selector = undefined;
+        }
+
+        handleNext() {
+          console.log(this.selector);
+          this.selector.next();
+        }
+
+        connectedCallback() {
+          const shadow = this.attachShadow({ mode: "open" });
+          
+          const container = document.createElement("div");
+          container.setAttribute("class", "container");
+
+          const children = Array.from(this.children);
+          //children.forEach(child => container.appendChild(child.cloneNode(true)));
+
+          const style = document.createElement("style");
+          style.textContent = `
+            .container {
+              min-width: 100%;
+              flex-grow: 1;
+              background-color: none;
+              display: flex;
+              flex-direction: row;
+              overflow: hidden;
+              z-index: 0;
+            }
+
+            .fadeInLeft {
+              animation: 
+                slideLeft 3s forwards, 
+                fadeIn 3s forwards;
+            }
+
+            .fadeInRight {
+              animation: 
+                slideRight 3s forwards, 
+                fadeIn 3s forwards;
+            }
+
+            .fadeOutLeft {
+              animation: 
+                slideLeft 3s forwards, 
+                fadeOut 3s forwards;
+            }
+
+            .fadeOutRight {
+              animation: 
+                slideRight 3s forwards, 
+                fadeOut 3s forwards;
+            }
+
+            @keyframes slideLeft {
+              0% {transform: translate(100%, 0%);}
+              100% {transform: translate(0%, 0%);}
+            }
+
+            @keyframes slideRight {
+              0% {transform: translate(0%, 0%);}
+              100% {transform: translate(100%, 0%);}
+            }
+
+            @keyframes fadeIn {
+              from {opacity: 0%;}
+              to {opacity: 100%;}
+            }
+
+            @keyframes fadeOut {
+              from {opacity: 100%;}
+              to {opacity: 0%;}
+            }
+          `;
+
+          const nextButton = document.createElement("button");
+          nextButton.innerText="next"
+          nextButton.addEventListener('click', this.handleNext.bind(this));
+          
+          const rootContainer = document.createElement("div");
+          rootContainer.setAttribute('style', 'display: flex; width: 100%; height: 100%;')
+          rootContainer.appendChild(container)
+          rootContainer.appendChild(nextButton)
+
+          // Attach the created elements to the shadow dom
+          shadow.appendChild(style);
+
+          shadow.appendChild(rootContainer);
+
+          this.selector = new CardSelector({container: container, items: children})
+          this.selector.next();
+        }
+      }
 
     </script>
-    <style>
-    .cards {
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .card {
-      position: relative;
-      right: 0%;
-      min-width: 100%;
-      flex-grow: 1;
-      background-color: rgba(150, 150, 150, 0.8);
-      border-radius: 10px;
-      box-sizing: border-box;
-      border: 5px solid #f00;
-      z-index: -1;
-    }
-
-    .fadeInLeft {
-      animation: 
-        slideLeft 1s forwards, 
-        fadeIn 1s forwards;
-    }
-
-    .fadeInRight {
-      animation: 
-        slideRight 1s forwards, 
-        fadeIn 1s forwards;
-    }
-
-    .fadeOutLeft {
-      animation: 
-        slideLeft 1s forwards, 
-        fadeOut 1s forwards;
-    }
-
-    .fadeOutRight {
-      animation: 
-        slideRight 1s forwards, 
-        fadeOut 1s forwards;
-    }
-
-    @keyframes slideLeft {
-      0% {transform: translate(100%, 0%);}
-      100% {transform: translate(0%, 0%);}
-    }
-
-    @keyframes slideRight {
-      0% {transform: translate(0%, 0%);}
-      100% {transform: translate(100%, 0%);}
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0%;}
-      to {opacity: 100%;}
-    }
-
-    @keyframes fadeOut {
-      from {opacity: 100%;}
-      to {opacity: 30%;}
-    }
-    </style>
   </head>
   <body style="background-color: #111">
-    <div style="display: flex">
-      <button onclick="cardSelector.previous()">prev</button>
-      <div id="prevContainer" class="cards" style="max-width: 0%"></div>
-      <div id="cardsContainer" class="cards" style="width: 300px; height: 500px; display: flex; flex-direction: row"></div>
-      <div id="cards">
-        <template id="0">
-          <div id="card" class="" style="">
-            <p>this is the first item</p>
-          </div>
-        </template>
-        <template id="1">
-          <div id="card" class="" style="">
-            <p>this is the second item</p>
-          </div>
-        </template>
-        <template id="2">
-          <div id="card" class="" style="">
-            <p>this is the third item</p>
-          </div>
-        </template>
-      </div>
-      <button onclick="cardSelector.next()">next</button>
+    <div style="width: 300px; height: 500px; background-color: none;">
+      <slides-element>
+        <div class="" style="position: relative; min-width: 100%; flex-grow: 1;">
+          <p>this is the first item</p>
+          <p>this is the first item</p>
+        </div>
+        <div class="" style="position: relative; min-width: 100%; flex-grow: 1; background-color: red">
+          <p>this is the seecond item</p>
+        </div>
+        <div class="" style="position: relative; min-width: 100%; flex-grow: 1;">
+          <p>this is the third item</p>
+        </div>
+      </slides-element>
     </div>
   </body>
 </html>
