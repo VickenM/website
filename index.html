@@ -2,6 +2,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vicken Mavlian Blog</title>
+    <script src="cards.js"></script>
     <script>
       function togglePopup(target, el) {
         el.classList.add('clicked');
@@ -15,24 +16,49 @@
         el.appendChild(domContent.content.cloneNode(true));
       }
 
-      function updatePageContent() {
+      async function updatePageContent() {
+        console.log('updating?')
         let url = URL.parse(window.location.href);
         let route = url.hash.split('#')[1] || "home";
-        switchPage(route);
+        /* doing my xml test, commented out switchPage for it */
+
+        if (route !== 'interview') {
+          switchPage(route);
+          return;
+        }
+
+        const c = await fetch(`${route}.xml`, {cache: "no-store"})
+          .then((response) => {
+            return response.text();
+          })
+          .then((xmlString) => {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlString, "text/html");
+
+            return xmlDoc.body.firstChild;
+          });
+
+        let el = document.getElementById('content');
+        if (c.innerHTML !== el.firstChild?.innerHTML) {
+          el.innerHTML = '';
+          el.appendChild(c);
+          console.log(el.innerHTML);
+        }
       }
 
       window.onload = function() {
         console.log(window);
-        console.log('loading...');
+        console.log('onload');
         updatePageContent();
       }
 
       window.onhashchange = function() {
-        console.log(`hash changed ${window.location.href}`);
+        console.log(`onhashchanged: ${window.location.href}`);
         updatePageContent();
       }
 
       window.onclick = function(event) {
+        console.log('onclick')
         Array.from(document.getElementsByClassName('talkbubble')).forEach((element) => {
           if (element.classList.contains('clicked')) {
             element.classList.remove('clicked')
@@ -50,13 +76,6 @@
         }
 */
       }
-/*
-      window.onpopstate = function (event) {
-        console.log('pop state');
-        updatePageContent();
-      }
-*/
-
     </script>
     <style>
 /*
@@ -102,7 +121,6 @@
     }
     body {
       font-family: 'OpenSans', sans-serif;
-/*      background-color: var(--background-color);  */
       background-image: linear-gradient(var(--background-color), var(--secondary-color));
     }
     html, body {
@@ -146,6 +164,13 @@
     .bordered {
       border: 1px solid var(--decoration-color); 
       border-radius: 10px;
+      padding: 0.5rem;
+    }
+    .bordered-glow {
+      border: 1px solid var(--foreground-color); 
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px var(--decoration-color), 
+                  inset 0px 0px 5px var(--decoration-color);
       padding: 0.5rem;
     }
     .stretched {
@@ -217,7 +242,7 @@
       -webkit-border-radius: 10px;
       border-radius: 10px;
       border: 1px solid var(--decoration-color); 
-      background-color: rgba(0,0,0, 0.9);
+     background-color: rgba(0,0,0, 0.9);
     }
 
     .innerContent {
@@ -226,6 +251,26 @@
     @keyframes fadeIn {
       0% { opacity: 0; }
       100% { opacity: 1; }
+    }
+
+    .cardOut {
+      overflow: hidden;
+      animation: slideOut 2s;
+    }
+
+    .cardIn {
+      overflow: hidden;
+      animation: slideIn 2s;
+    }
+
+    @keyframes slideOut {
+      0% {transform: translate(0px, 0);}
+      100% {transform: translate(-100px, 0px);}
+    }
+
+    @keyframes slideIn {
+      0% {transform: translate(100px, 0);}
+      100% {transform: translate(0px, 0px);}
     }
     </style>
   </head>
@@ -249,7 +294,8 @@
                 <menu class="" style="display: flex; flex-direction: column; gap: 0.5rem; margin: 0rem; padding: 0.5rem;">
                   <li><a href="#tools">Tools</a></li>
                   <li><a href="#blog">Blog</a></li>
-                  <li><a href="#bio">Bio</a></li>
+                  <li><a href="#bio/one/two">Bio</a></li>
+                  <li><a href="#interview">Interview</a></li>
                 </menu>
               </div>
             </div>
@@ -257,7 +303,8 @@
               <menu class="stretched" style="align-items: center;">
                 <li><a href="#tools">Tools</a></li>
                 <li><a href="#blog">Blog</a></li>
-                <li><a href="#bio">Bio</a></li>
+                <li><a href="#bio/one/two">Bio</a></li>
+                <li><a href="#interview">Interview</a></li>
               </menu>
             </div>
           </div>
@@ -294,13 +341,60 @@
       <div class="innerContent">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
+        <div style="display: flex; flex-direction: row;">
+          <button onclick="getElementById('slides').handlePrevious()"><pre>< </pre></button>
+
+          <div id="cards" class="bordered-glow" style="overflow: hidden; width: 100%; min-height: 10rem; display: flex; flex-direction: column">
+            <slides-element id="slides" style="flex-grow: 1;">
+              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
+                <p>this is the first item</p>
+              </div>
+              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
+                <p>this is the seecond item</p>
+              </div>
+              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none;">
+                <p>this is the third item</p>
+              </div>
+            </slides-element>
+          </div>
+          <button onclick="getElementById('slides').handleNext()"><pre> ></pre></button>
+        </div>
+
         <article class="container">
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">SVG Tutorial</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.30</h4>
+            </div>
+            <p>Learn about SVGs with this tutorial
+              <a style="" target="" href="https://svg-tutorial.com/">here</a>
+            </p>
+          </article>
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Some interesting free APIs</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.30</h4>
+            </div>
+            <p>Free APIs are fun. Let's look at some</p>
+            <a style="text-decoration: none; font-weight: bold" target="" href="#blog-2024-11-30">Read More</a>
+          </article>
+          <article class="bordered item" style="display: flex; flex-direction: column;">
+            <div style="display: flex; ">
+              <h2 class="" style="margin: 0rem; flex-grow: 1;">Article on live reloading</h2>
+              <h4 class="" style="margin: 0rem;">2024.11.26</h4>
+            </div>
+            <p>This guy has an article on rolling your own live reloading over <a href="https://adamcoster.com/blog/create-a-live-reload-server-for-front-end-development" target="_blank">here</a></p>
+          </article>
           <article class="bordered item" style="display: flex; flex-direction: column;">
             <div style="display: flex; ">
               <h2 class="" style="margin: 0rem; flex-grow: 1;">A CSS Reset I Should Try</h2>
               <h4 class="" style="margin: 0rem;">2024.11.18</h4>
             </div>
             <p>This Josh Comeau guy has a good CSS Reset over <a href="https://www.joshwcomeau.com/css/custom-css-reset/" target="_blank">here</a></p>
+            <p>
+              A rule I just came up with: your CSS should be utility names (like Tailwind does). 
+              Descriptive names (like "info", "warning", "card", "code", etc) are for components!
+            </p>
           </article>
           <article class="bordered item" style="display: flex; flex-direction: column;">
             <div style="display: flex; ">

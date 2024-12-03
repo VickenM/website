@@ -2,235 +2,26 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vicken Mavlian Blog</title>
-    <script>
-      
-      window.onload = function() {
-        console.log(window);
-        console.log('loading...');
-
-        customElements.define('slides-element', Slides)
-      }
-
-      window.onhashchange = function() {
-      }
-
-      window.onclick = function(event) {
-      }
-
-      class CardSelector {
-        constructor(params) {
-          this.container = params.container;
-          this.items = params.items;
-
-          this.index = -1;
-          this.direction = 0;
-        }
-
-        previous() {
-          if (--this.index < 0) {this.index = this.items.length-1;}
-
-          let newCard = document.createElement("div");
-          newCard.classList.add('fadeInRight')
-          newCard.setAttribute('style', "position: relative; min-width: 100%; display: flex; right: 100%")
-          newCard.appendChild(this.items[this.index].cloneNode(true));
-
-          if (this.container.children?.length == 1) {
-            let prevCard = this.container.children[0];
-            prevCard.style.right = '100%'
-            prevCard.classList.remove('fadeInLeft');
-            prevCard.classList.add('fadeOutRight')
-            this.container.insertBefore(newCard, this.container.children[0]);
-          } 
-          else if (this.container.children?.length == 2) {
-            if (this.direction < 0) { // im going in the same direction
-              this.container.removeChild(this.container.children[1]);
-              this.container.children[0].style.right = '100%';
-              this.container.children[0].classList.remove('fadeInLeft');
-              this.container.children[0].classList.remove('fadeInRight');
-              void this.container.children[0].offsetWidth;
-              this.container.children[0].classList.add('fadeOutRight')
-
-              this.container.insertBefore(newCard, this.container.children[0]);
-            } else { // the direction switched
-              this.container.children[0].style.right = '100%';
-              this.container.children[0].classList.remove('fadeOutLeft');
-              this.container.children[0].classList.remove('fadeOutRight');
-              void this.container.children[0].offsetWidth;
-              this.container.children[0].classList.add('fadeInRight')
-
-              this.container.children[1].style.right = '100%';
-              this.container.children[1].classList.remove('fadeInLeft');
-              this.container.children[1].classList.remove('fadeInRight');
-              void this.container.children[1].offsetWidth;
-              this.container.children[1].classList.add('fadeOutRight')
-            }
-          }
-          this.direction = -1;
-        }
-
-        next() {
-          let cards = document.getElementById('cards');
-          if (++this.index > this.items.length-1) {this.index = 0;}
-
-          let newCard = document.createElement("div");
-          newCard.classList.add('fadeInLeft')
-          newCard.setAttribute('style', "position: relative; min-width: 100%; display: flex;")
-          newCard.appendChild(this.items[this.index].cloneNode(true));
-
-          if (this.container.children.length == 0) {
-            this.container.appendChild(newCard);
-          }
-          else if (this.container.children?.length == 1) {
-            newCard.style.right = '100%'
-            let prevCard = this.container.children[0];
-            prevCard.style.right = '100%'
-            prevCard.classList.remove('fadeInLeft');
-            void prevCard.offsetWidth;
-            prevCard.classList.add('fadeOutLeft')
-            this.container.appendChild(newCard);
-          } 
-          else if (this.container.children?.length == 2) {
-            if (this.direction > 0) { // im going in the same direction
-              this.container.removeChild(this.container.children[0]);
-              this.container.children[0].style.right = '100%';
-              this.container.children[0].classList.remove('fadeInLeft');
-              this.container.children[0].classList.remove('fadeInRight');
-              void this.container.children[0].offsetWidth;
-              this.container.children[0].classList.add('fadeOutLeft')
-
-              newCard.style.right = '100%'
-              this.container.appendChild(newCard);
-            } else { // the direction switched
-              this.container.children[1].style.right = '100%';
-              this.container.children[1].classList.remove('fadeInLeft');
-              this.container.children[1].classList.remove('fadeInRight');
-              this.container.children[1].classList.remove('fadeOutRight');
-              void this.container.children[1].offsetWidth;
-              this.container.children[1].classList.add('fadeInLeft')
-
-              this.container.children[0].style.right = '100%';
-              this.container.children[0].classList.remove('fadeOutLeft');
-              this.container.children[0].classList.remove('fadeOutRight');
-              void this.container.children[0].offsetWidth;
-              this.container.children[0].classList.add('fadeOutLeft')
-            }
-          }
-          this.direction = 1;
-        }
-      }
-
-      let cardSelector = undefined;
-
-      class Slides extends HTMLElement {
-        constructor() {
-          super();
-          this.selector = undefined;
-        }
-
-        handlePrevious() {
-          this.selector.previous();
-        }
-
-        handleNext() {
-          this.selector.next();
-        }
-
-        connectedCallback() {
-          const shadow = this.attachShadow({ mode: "open" });
-          
-          const container = document.createElement("div");
-          container.setAttribute("class", "container");
-
-          const children = Array.from(this.children);
-
-          const style = document.createElement("style");
-          style.textContent = `
-            .container {
-              min-width: 100%;
-              flex-grow: 1;
-              background-color: none;
-              display: flex;
-              flex-direction: row;
-              overflow: hidden;
-              z-index: 0;
-            }
-
-            .fadeInLeft {
-              animation: 
-                slideLeft 3s forwards, 
-                fadeIn 3s forwards;
-            }
-
-            .fadeInRight {
-              animation: 
-                slideRight 3s forwards, 
-                fadeIn 3s forwards;
-            }
-
-            .fadeOutLeft {
-              animation: 
-                slideLeft 3s forwards, 
-                fadeOut 3s forwards;
-            }
-
-            .fadeOutRight {
-              animation: 
-                slideRight 3s forwards, 
-                fadeOut 3s forwards;
-            }
-
-            @keyframes slideLeft {
-              0% {transform: translate(100%, 0%);}
-              100% {transform: translate(0%, 0%);}
-            }
-
-            @keyframes slideRight {
-              0% {transform: translate(0%, 0%);}
-              100% {transform: translate(100%, 0%);}
-            }
-
-            @keyframes fadeIn {
-              from {opacity: 0%;}
-              to {opacity: 100%;}
-            }
-
-            @keyframes fadeOut {
-              from {opacity: 100%;}
-              to {opacity: 0%;}
-            }
-          `;
-
-          const rootContainer = document.createElement("div");
-          rootContainer.setAttribute('style', 'display: flex; width: 100%; height: 100%;')
-          rootContainer.appendChild(container)
-
-          shadow.appendChild(style);
-          shadow.appendChild(rootContainer);
-
-          this.selector = new CardSelector({container: container, items: children})
-          this.selector.next();
-        }
-      }
-    </script>
+    <script src="cards.js"></script>
   </head>
   <body style="background-color: #111">
     <div style="display: flex; flex-direction: row;">
-      <button onclick="getElementById('slides').handlePrevious()">previous</button>
-      <div style="width: 300px; height: 500px; background-color: none;">
-        <slides-element id="slides">
-          <div class="" style="flex-grow: 1; background: red">
-            <p>this is the first item</p>
-            <p>this is the first item</p>
-          </div>
-          <div class="" style="flex-grow: 1; background-color: blue">
-            <p>this is the seecond item</p>
-          </div>
-          <div class="" style="flex-grow: 1; background-color: green;">
-            <p>this is the third item</p>
-          </div>
-        </slides-element>
-      </div>
-      <button onclick="getElementById('slides').handleNext()">next</button>
+      <button onclick="getElementById('slides').handlePrevious()"><pre>< </pre></button>
+      <slides-element id="slides" style="flex-grow: 1;">
+        <div class="" style="flex-grow: 1; background-color: blue">
+          <p>this is the first item</p>
+        </div>
+        <div class="" style="flex-grow: 1; background-color: red">
+          <p>this is the seecond item</p>
+        </div>
+        <div class="" style="flex-grow: 1; background-color: green;">
+          <p>this is the third item</p>
+        </div>
+        <div class="" style="flex-grow: 1; background-color: lightblue;">
+          <p>this is the fourth item</p>
+        </div>
+      </slides-element>
+      <button onclick="getElementById('slides').handleNext()"><pre> ></pre></button>
     </div>
   </body>
 </html>
