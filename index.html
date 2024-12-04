@@ -2,6 +2,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Vicken Mavlian Blog</title>
+    <script src="slides.js"></script>
     <script src="cards.js"></script>
     <script>
       function togglePopup(target, el) {
@@ -22,11 +23,6 @@
         let route = url.hash.split('#')[1] || "home";
         /* doing my xml test, commented out switchPage for it */
 
-        if (route !== 'interview') {
-          switchPage(route);
-          return;
-        }
-
         const c = await fetch(`${route}.xml`, {cache: "no-store"})
           .then((response) => {
             return response.text();
@@ -42,7 +38,6 @@
         if (c.innerHTML !== el.firstChild?.innerHTML) {
           el.innerHTML = '';
           el.appendChild(c);
-          console.log(el.innerHTML);
         }
       }
 
@@ -295,7 +290,6 @@
                   <li><a href="#tools">Tools</a></li>
                   <li><a href="#blog">Blog</a></li>
                   <li><a href="#bio/one/two">Bio</a></li>
-                  <li><a href="#interview">Interview</a></li>
                 </menu>
               </div>
             </div>
@@ -304,7 +298,6 @@
                 <li><a href="#tools">Tools</a></li>
                 <li><a href="#blog">Blog</a></li>
                 <li><a href="#bio/one/two">Bio</a></li>
-                <li><a href="#interview">Interview</a></li>
               </menu>
             </div>
           </div>
@@ -313,9 +306,8 @@
 
       <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1;">
         <div class="" style="margin: 0 10%; width: 80%; max-width: 50rem; display: flex; flex-direction: column; flex-grow: 1;">
-          
+      
           <div id="content" style="flex-grow: 1" class=""></div>
-
           <footer>
             <div style="display: flex; justify-content: space-between; align-items: center">
               <h5>last updated: 2024.11.16 11:41 PM</h5>
@@ -337,102 +329,7 @@
         </div>
       </div>
     </div>
-    <template id="home">
-      <div class="innerContent">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-        <div style="display: flex; flex-direction: row;">
-          <button onclick="getElementById('slides').handlePrevious()"><pre>< </pre></button>
-
-          <div id="cards" class="bordered-glow" style="overflow: hidden; width: 100%; min-height: 10rem; display: flex; flex-direction: column">
-            <slides-element id="slides" style="flex-grow: 1;">
-              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
-                <p>this is the first item</p>
-              </div>
-              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
-                <p>this is the seecond item</p>
-              </div>
-              <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none;">
-                <p>this is the third item</p>
-              </div>
-            </slides-element>
-          </div>
-          <button onclick="getElementById('slides').handleNext()"><pre> ></pre></button>
-        </div>
-
-        <article class="container">
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">SVG Tutorial</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.30</h4>
-            </div>
-            <p>Learn about SVGs with this tutorial
-              <a style="" target="" href="https://svg-tutorial.com/">here</a>
-            </p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Some interesting free APIs</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.30</h4>
-            </div>
-            <p>Free APIs are fun. Let's look at some</p>
-            <a style="text-decoration: none; font-weight: bold" target="" href="#blog-2024-11-30">Read More</a>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Article on live reloading</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.26</h4>
-            </div>
-            <p>This guy has an article on rolling your own live reloading over <a href="https://adamcoster.com/blog/create-a-live-reload-server-for-front-end-development" target="_blank">here</a></p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">A CSS Reset I Should Try</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.18</h4>
-            </div>
-            <p>This Josh Comeau guy has a good CSS Reset over <a href="https://www.joshwcomeau.com/css/custom-css-reset/" target="_blank">here</a></p>
-            <p>
-              A rule I just came up with: your CSS should be utility names (like Tailwind does). 
-              Descriptive names (like "info", "warning", "card", "code", etc) are for components!
-            </p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 4</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.06</h4>
-            </div>
-            <p>
-              here are some good svg images:
-              <a target="_blank" href="https://www.svgrepo.com/">svgrep</a>
-              and here is a good optimizer:
-              <a target="_blank" href="https://svgomg.net/">svgomg (optimizer)</a>
-            <a style="text-decoration: none; font-weight: bold" target="" href="">Read More</a>
-            </p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 3</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.05</h4>
-            </div>
-            <p>Here is a less interesting post</p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 2</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.03</h4>
-            </div>
-            <p>Here is another interesting post</p>
-          </article>
-          <article class="bordered item" style="display: flex; flex-direction: column;">
-            <div style="display: flex; ">
-              <h2 class="" style="margin: 0rem; flex-grow: 1;">Post 1</h2>
-              <h4 class="" style="margin: 0rem;">2024.11.01</h4>
-            </div>
-            <p>Here is an interesting post</p>
-          </article>
-        </article>
-      </div>
-    </template>
     <template id="tools">
       <div class="innerContent">
         <p>Here are some tools!</p>
