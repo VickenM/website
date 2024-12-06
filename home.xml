@@ -1,64 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div class="innerContent" id="scoped-content">
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <div style="display: flex; flex-direction: row;">
-<!--
-    <button onclick="getElementById('slides').handlePrevious()"><pre>< </pre></button>
-    <div id="cards" class="bordered-glow" style="overflow: hidden; width: 100%; min-height: 10rem; display: flex; flex-direction: column">
-      <slides-element id="slides" style="flex-grow: 1;">
-        <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
-          <p>this is the first item</p>
-        </div>
-        <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none">
-          <p>this is the seecond item</p>
-        </div>
-        <div class="" style="flex-grow: 1; border-radius: calc(10px - 1px); background-color: none;">
-          <p>this is the third item</p>
-        </div>
-      </slides-element>
-    </div>
-    <button onclick="getElementById('slides').handleNext()"><pre> ></pre></button>
--->
+  <p>
+    I'm Vicken Mavlian. I'm a Software Developer and Technical Director in the VFX industry with over 15 years experience.
+    This website is a way for me to explore my interests, organize my thoughts and maintain my motivation for writing code and building things.
+  </p>
+
   <article class="container">
-    <cards-element class="bordered cool" heading="SVG Tutorial" date="2024.11.30">
-      <p>Learn about SVGs with this tutorial
-        <a style="" target="" href="https://svg-tutorial.com/">here</a>
+    <cards-element className="bordered item" heading="SVG Tutorial" date="today">
+      <p style="padding: 10px 10px">Learn about SVGs with this tutorial
+        <a style="" target="_blank" href="https://svg-tutorial.com/">here</a>
       </p>
     </cards-element>
-    <article class="bordered item" style="display: flex; flex-direction: column;">
-      <div style="display: flex; ">
-        <h2 class="" style="margin: 0rem; flex-grow: 1;">SVG Tutorial</h2>
-        <h4 class="" style="margin: 0rem;">2024.11.30</h4>
-      </div>
-      <p>Learn about SVGs with this tutorial
-        <a style="" target="" href="https://svg-tutorial.com/">here</a>
+    <cards-element className="bordered item" heading="Some Interesting Free APIs" date="2024.11.3">
+      <p>Free APIs are fun. Let's look at some
+        <a target="_blank" href="#blog-2024-11-30">here</a>
       </p>
-    </article>
-    <article class="bordered item" style="display: flex; flex-direction: column;">
-      <div style="display: flex; ">
-        <h2 class="" style="margin: 0rem; flex-grow: 1;">Some interesting free APIs</h2>
-        <h4 class="" style="margin: 0rem;">2024.11.30</h4>
-      </div>
-      <p>Free APIs are fun. Let's look at some</p>
-      <a style="text-decoration: none; font-weight: bold" target="" href="#blog-2024-11-30">Read More</a>
-    </article>
-    <article class="bordered item" style="display: flex; flex-direction: column;">
-      <div style="display: flex; ">
-        <h2 class="" style="margin: 0rem; flex-grow: 1;">Article on live reloading</h2>
-        <h4 class="" style="margin: 0rem;">2024.11.26</h4>
-      </div>
-      <p>This guy has an article on rolling your own live reloading over <a href="https://adamcoster.com/blog/create-a-live-reload-server-for-front-end-development" target="_blank">here</a></p>
-    </article>
-    <article class="bordered item" style="display: flex; flex-direction: column;">
-      <div style="display: flex; ">
-        <h2 class="" style="margin: 0rem; flex-grow: 1;">A CSS Reset I Should Try</h2>
-        <h4 class="" style="margin: 0rem;">2024.11.18</h4>
-      </div>
-      <p>This Josh Comeau guy has a good CSS Reset over <a href="https://www.joshwcomeau.com/css/custom-css-reset/" target="_blank">here</a></p>
-      <p>
-        A rule I just came up with: your CSS should be utility names (like Tailwind does). 
-        Descriptive names (like "info", "warning", "card", "code", etc) are for components!
+    </cards-element>
+    <cards-element className="bordered item" heading="Article on Live Reloading" date="2024.11.26">
+      <p>This guy has an article on rolling your own live reloading over
+        <a href="https://adamcoster.com/blog/create-a-live-reload-server-for-front-end-development" target="_blank">here</a>
       </p>
-    </article>
+    </cards-element>
+    <cards-element className="bordered item" heading="A CSS Reset I Should Try" date="2024.11.18">
+        <p>This Josh Comeau guy has a good CSS Reset over <a href="https://www.joshwcomeau.com/css/custom-css-reset/" target="_blank">here</a></p>
+        <p>
+          A rule I just came up with: your CSS should be utility names (like Tailwind does). 
+          Descriptive names (like "info", "warning", "card", "code", etc) are for components!
+        </p>
+    </cards-element>
   </article>
 </div>
